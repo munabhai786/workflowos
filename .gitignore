@@ -1,0 +1,28 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.env
+
+# FastAPI
+*.db
+*.sqlite3
+
+# Node
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# uploads/temp
+uploads/
+temp/

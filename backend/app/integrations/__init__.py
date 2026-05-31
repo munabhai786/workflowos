@@ -1,0 +1,1 @@
+from app.integrations.integration_manager import integration_manager
