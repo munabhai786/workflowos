@@ -50,7 +50,7 @@ export const DeleteConfirmationModal = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl border border-slate-200 bg-white p-6 shadow-xl"
+            className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-xl text-slate-900 dark:text-slate-100"
             role="alertdialog"
             aria-labelledby="confirm-title"
             aria-describedby="confirm-desc"
@@ -61,26 +61,26 @@ export const DeleteConfirmationModal = ({
               </div>
 
               <div className="flex-1">
-                <h2 id="confirm-title" className="font-semibold text-slate-900">
+                <h2 id="confirm-title" className="font-semibold text-slate-900 dark:text-slate-100">
                   {title}
                 </h2>
 
-                <p id="confirm-desc" className="mt-1 text-sm text-slate-600">
+                <p id="confirm-desc" className="mt-1 text-sm text-slate-600 dark:text-slate-300 break-words">
                   {description}
-                  {itemName && <> — <strong>{itemName}</strong></>}
+                  {itemName && <> — <strong className="break-all">{itemName}</strong></>}
                 </p>
 
                 {isDangerous && (
                   <div className="mt-4">
-                    <label className="block text-xs font-medium text-slate-700">
-                      Type <strong className="text-red-600">DELETE</strong> to confirm
+                    <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">
+                      Type <strong className="text-red-600 dark:text-red-400">DELETE</strong> to confirm
                     </label>
                     <input
                       type="text"
                       value={confirmText}
                       onChange={(e) => setConfirmText(e.target.value)}
                       placeholder="Type DELETE"
-                      className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 px-3 py-2 text-sm placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                       autoComplete="off"
                       onKeyDown={(e) => {
                         if (e.key === "Enter" && !shouldDisableConfirm) {
@@ -95,7 +95,7 @@ export const DeleteConfirmationModal = ({
                   <button
                     type="button"
                     onClick={handleCancel}
-                    className="flex-1 rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                    className="flex-1 rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200"
                   >
                     Cancel
                   </button>

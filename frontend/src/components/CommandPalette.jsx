@@ -207,7 +207,7 @@ export default function CommandPalette() {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[80] flex items-start justify-center bg-slate-950/35 px-3 py-20 backdrop-blur-sm sm:px-6"
+          className="fixed inset-0 z-[80] flex items-start justify-center bg-slate-950/35 px-3 py-6 sm:py-20 backdrop-blur-sm sm:px-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -289,7 +289,7 @@ export default function CommandPalette() {
 
             <div className="flex items-center justify-between border-t border-slate-200 px-4 py-2 text-xs font-semibold text-slate-400 dark:border-slate-800">
               <span>Ctrl K</span>
-              <span>Shift A → Copilot • Arrow keys to move, Enter to open</span>
+              <span className="hidden sm:inline">Shift A → Copilot • Arrow keys to move, Enter to open</span>
 
             </div>
           </motion.div>

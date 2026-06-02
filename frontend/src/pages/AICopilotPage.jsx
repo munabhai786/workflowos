@@ -107,6 +107,7 @@ const AICopilotPage = () => {
   const [isVoiceSettingsOpen, setIsVoiceSettingsOpen] = useState(false);
   const [copiedMessageId, setCopiedMessageId] = useState(null);
   const [executingAction, setExecutingAction] = useState(null);
+  const [showHistory, setShowHistory] = useState(false);
   const fileInputRef = useRef(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -407,6 +408,14 @@ const AICopilotPage = () => {
             >
               <Plus className="h-3.5 w-3.5" />
               New
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowHistory(true)}
+              className="ml-2 inline-flex h-9 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 text-xs font-bold text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 md:hidden"
+            >
+              <MessageSquare className="h-3.5 w-3.5" />
+              History
             </button>
             <div className="ml-auto hidden items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 sm:flex">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
@@ -892,94 +901,102 @@ const AICopilotPage = () => {
               )}
             </AnimatePresence>
 
-            <div className="flex items-end gap-2">
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 transition-all hover:bg-slate-200 dark:hover:bg-slate-600 hover:text-slate-700"
-              >
-                <Paperclip className="h-4 w-4" />
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept=".pdf,.png,.jpg,.jpeg,.docx,.txt"
-                onChange={handleFileSelect}
-                className="hidden"
-              />
+            <div className="flex flex-wrap items-end gap-2">
+              {/* Secondary actions (Upload & Voice Input) */}
+              <div className="flex items-center gap-2 order-2 sm:order-1">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 transition-all hover:bg-slate-200 dark:hover:bg-slate-600 hover:text-slate-700"
+                  title="Upload files"
+                >
+                  <Paperclip className="h-4 w-4" />
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".pdf,.png,.jpg,.jpeg,.docx,.txt"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                />
 
-              <button
-                type="button"
-                onClick={startListening}
-                disabled={voiceState === "processing"}
-                className={`relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl transition-all ${
-                  voiceState === "listening"
-                    ? "bg-blue-600 text-white shadow-[0_0_0_4px_rgba(37,99,235,0.14),0_10px_30px_rgba(37,99,235,0.3)]"
-                    : voiceState === "error"
-                      ? "bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-300"
-                      : "bg-slate-100 text-slate-500 hover:bg-blue-50 hover:text-blue-600 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-blue-900/30"
-                } disabled:cursor-wait disabled:opacity-70`}
-                aria-label={
-                  voiceState === "listening" ? "Stop listening" : "Start voice input"
-                }
-                title={
-                  speechSupported
-                    ? voiceState === "listening"
-                      ? "Stop listening"
-                      : "Voice input"
-                    : "Voice input is not supported in this browser."
-                }
-              >
-                {voiceState === "listening" && (
-                  <motion.span
-                    className="absolute inset-0 rounded-xl border border-blue-300"
-                    animate={{ scale: [1, 1.22], opacity: [0.55, 0] }}
-                    transition={{ duration: 1.1, repeat: Infinity }}
-                  />
-                )}
-                {voiceState === "listening" ? (
-                  <MicOff className="h-4 w-4" />
-                ) : (
-                  <Mic className="h-4 w-4" />
-                )}
-              </button>
+                <button
+                  type="button"
+                  onClick={startListening}
+                  disabled={voiceState === "processing"}
+                  className={`relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl transition-all ${
+                    voiceState === "listening"
+                      ? "bg-blue-600 text-white shadow-[0_0_0_4px_rgba(37,99,235,0.14),0_10px_30px_rgba(37,99,235,0.3)]"
+                      : voiceState === "error"
+                        ? "bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-300"
+                        : "bg-slate-100 text-slate-500 hover:bg-blue-50 hover:text-blue-600 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-blue-900/30"
+                  } disabled:cursor-wait disabled:opacity-70`}
+                  aria-label={
+                    voiceState === "listening" ? "Stop listening" : "Start voice input"
+                  }
+                  title={
+                    speechSupported
+                      ? voiceState === "listening"
+                        ? "Stop listening"
+                        : "Voice input"
+                      : "Voice input is not supported in this browser."
+                  }
+                >
+                  {voiceState === "listening" && (
+                    <motion.span
+                      className="absolute inset-0 rounded-xl border border-blue-300"
+                      animate={{ scale: [1, 1.22], opacity: [0.55, 0] }}
+                      transition={{ duration: 1.1, repeat: Infinity }}
+                    />
+                  )}
+                  {voiceState === "listening" ? (
+                    <MicOff className="h-4 w-4" />
+                  ) : (
+                    <Mic className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
 
-              <textarea
-                ref={inputRef}
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask about your projects, tasks, or upload a file to analyze..."
-                rows={1}
-                className="max-h-32 min-w-0 flex-1 resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm leading-relaxed text-slate-700 transition-all placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:outline-none focus:shadow-[0_0_0_3px_rgba(59,130,246,0.1)] dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200 dark:placeholder:text-slate-500 dark:focus:bg-slate-600 sm:px-4"
-                style={{
-                  height: "auto",
-                  minHeight: "44px",
-                }}
-                onInput={(e) => {
-                  e.target.style.height = "auto";
-                  e.target.style.height =
-                    Math.min(e.target.scrollHeight, 128) + "px";
-                }}
-              />
+              {/* Main Input Bar and Send Button */}
+              <div className="flex items-end gap-2 flex-1 order-1 sm:order-2 w-full sm:w-auto">
+                <textarea
+                  ref={inputRef}
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask about your projects, tasks, or upload a file to analyze..."
+                  rows={1}
+                  className="max-h-32 min-w-0 flex-1 resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm leading-relaxed text-slate-700 transition-all placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:outline-none focus:shadow-[0_0_0_3px_rgba(59,130,246,0.1)] dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200 dark:placeholder:text-slate-500 dark:focus:bg-slate-600 sm:px-4"
+                  style={{
+                    height: "auto",
+                    minHeight: "44px",
+                  }}
+                  onInput={(e) => {
+                    e.target.style.height = "auto";
+                    e.target.style.height =
+                      Math.min(e.target.scrollHeight, 128) + "px";
+                  }}
+                />
 
-              <button
-                type="button"
-                onClick={handleSend}
-                disabled={
-                  isSending ||
-                  (!inputMessage.trim() && !selectedFile)
-                }
-                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm dark:shadow-slate-900/50 transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200"
-              >
-                {isSending ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Send className="h-4 w-4" />
-                )}
-              </button>
+                <button
+                  type="button"
+                  onClick={handleSend}
+                  disabled={
+                    isSending ||
+                    (!inputMessage.trim() && !selectedFile)
+                  }
+                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm dark:shadow-slate-900/50 transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200"
+                >
+                  {isSending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Send className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
 
-              <div className="relative">
+              {/* Settings Action Button */}
+              <div className="relative order-3 sm:order-3">
                 <button
                   type="button"
                   onClick={() => setIsVoiceSettingsOpen((current) => !current)}
@@ -1186,6 +1203,97 @@ const AICopilotPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile History Drawer */}
+      <AnimatePresence>
+        {showHistory && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowHistory(false)}
+              className="fixed inset-0 z-[100] bg-slate-950/40 backdrop-blur-sm md:hidden"
+            />
+            {/* Drawer */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 260 }}
+              className="fixed inset-y-0 left-0 z-[101] flex w-[280px] flex-col bg-white dark:bg-slate-800 shadow-2xl md:hidden border-r border-slate-200 dark:border-slate-700"
+            >
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 p-4">
+                <span className="text-sm font-bold text-slate-800 dark:text-white">Chat History</span>
+                <button
+                  type="button"
+                  onClick={() => setShowHistory(false)}
+                  className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="border-b border-slate-200 dark:border-slate-700 p-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    startNewConversation();
+                    setShowHistory(false);
+                  }}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-3 py-2.5 text-sm font-semibold text-white transition-all hover:bg-blue-700"
+                >
+                  <Plus className="h-4 w-4" />
+                  New Conversation
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-2">
+                {conversations.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center px-4 py-10 text-center">
+                    <MessageSquare className="mb-2 h-8 w-8 text-slate-200" />
+                    <p className="text-xs text-slate-400 dark:text-slate-500">
+                      No conversations yet.
+                    </p>
+                  </div>
+                ) : (
+                  conversations.map((convo) => (
+                    <div
+                      key={convo.id}
+                      onClick={() => {
+                        loadConversation(convo.id);
+                        setShowHistory(false);
+                      }}
+                      className={`group mb-1 flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2.5 transition-all ${
+                        activeConversationId === convo.id
+                          ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400"
+                          : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
+                      }`}
+                    >
+                      <MessageSquare className="h-3.5 w-3.5 flex-shrink-0" />
+                      <span className="flex-1 truncate text-xs font-medium">
+                        {convo.title}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          handleDeleteConversation(convo.id);
+                        }}
+                        className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded transition-all hover:bg-red-100 hover:text-red-500 text-slate-400"
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </MainLayout>
   );
 };

@@ -383,22 +383,15 @@ def login_user(
     data: LoginSchema,
     db: Session = Depends(get_db),
 ):
-    # Temporary debug logging for auth regression (no secrets/password/OTP values).
-    # Keep this until the 403 root cause is confirmed, then remove/disable.
     user = get_user_by_email(db, data.email)
 
     if not user:
-        print(f"[LOGIN] user_not_found email={data.email.lower()}")
         raise HTTPException(
             status_code=401,
             detail="Incorrect email or password. Please try again.",
         )
 
     password_ok = verify_password(data.password, user.password)
-    print(
-        "[LOGIN] password_check "
-        f"email={data.email.lower()} ok={password_ok} is_verified={getattr(user, 'is_verified', None)}"
-    )
 
     if not password_ok:
         raise HTTPException(
@@ -407,16 +400,10 @@ def login_user(
         )
 
     if not user.is_verified:
-        print(
-            "[LOGIN] blocked email="
-            f"{data.email.lower()} reason=is_verified_false"
-        )
         raise HTTPException(
             status_code=403,
             detail="Verify your email before signing in",
         )
-
-
     if user.two_factor_enabled:
         if user.two_factor_method == "email":
             send_user_mfa_otp(db, user)

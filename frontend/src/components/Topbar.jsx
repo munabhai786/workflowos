@@ -80,6 +80,16 @@ export default function Topbar({
 
         <button
           type="button"
+          onClick={() => window.dispatchEvent(new CustomEvent("workflowos:open-command-palette"))}
+          title="Open search"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 xl:hidden"
+          aria-label="Search"
+        >
+          <Search className="h-4 w-4" />
+        </button>
+
+        <button
+          type="button"
           onClick={toggleDark}
           title={isDark ? "Switch to light mode" : "Switch to dark mode"}
           className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"

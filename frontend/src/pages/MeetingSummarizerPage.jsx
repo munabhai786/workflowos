@@ -678,16 +678,16 @@ export default function MeetingSummarizerPage() {
                   ))}
 
                   {/* BOTTOM ACTIONS BAR */}
-                  <div className="flex items-center justify-between border-t border-slate-200 dark:border-slate-800 pt-6 mt-6">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-t border-slate-200 dark:border-slate-800 pt-6 mt-6">
                     <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
                       {suggestedTasks.filter((t) => t.selected).length} task(s) selected for generation
                     </p>
                     
-                    <div className="flex items-center gap-3">
+                    <div className="flex w-full flex-col-reverse gap-2 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
                       <button
                         type="button"
                         onClick={handleReset}
-                        className="rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-750"
+                        className="w-full sm:w-auto rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-750"
                       >
                         Reset / Dismiss
                       </button>
@@ -695,7 +695,7 @@ export default function MeetingSummarizerPage() {
                         type="button"
                         onClick={handleCreateTasks}
                         disabled={creatingTasks || suggestedTasks.filter((t) => t.selected).length === 0}
-                        className="flex items-center justify-center gap-2 rounded-lg bg-brand-650 hover:bg-brand-700 disabled:bg-slate-300 disabled:cursor-not-allowed px-5 py-2 text-sm font-semibold text-white shadow-sm transition"
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-lg bg-brand-650 hover:bg-brand-700 disabled:bg-slate-300 disabled:cursor-not-allowed px-5 py-2 text-sm font-semibold text-white shadow-sm transition"
                       >
                         {creatingTasks ? (
                           <>

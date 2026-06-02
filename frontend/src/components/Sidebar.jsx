@@ -365,10 +365,7 @@ export default function Sidebar({
         aria-label="Close navigation"
       />
     )}
-    <motion.aside
-      initial={false}
-      animate={{ x: isOpen ? 0 : 0 }}
-      transition={{ duration: 0.24, ease: [0.2, 0.8, 0.2, 1] }}
+    <aside
       className={`fixed inset-y-0 left-0 z-50 flex h-dvh w-[min(84vw,260px)] flex-col border-r border-white/5 bg-[#0f0f1a] text-white shadow-sidebar transition-transform duration-300 lg:sticky lg:top-0 lg:z-30 lg:w-[240px] lg:translate-x-0 ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       }`}
@@ -554,7 +551,7 @@ export default function Sidebar({
 
         </button>
 
-    </motion.aside>
+    </aside>
     </>
   );
 }

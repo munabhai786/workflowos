@@ -1355,12 +1355,12 @@ export default function TaskWorkspace({
                 <label className="text-slate-500 font-medium flex items-center gap-1.5 text-xs">
                   <CalendarClock size={13} /> Due Date
                 </label>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2 sm:flex-nowrap">
                   <input
                     type="datetime-local"
                     value={dueDate}
                     onChange={(e) => updateTaskField("due_date", e.target.value)}
-                    className="flex-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-slate-100"
+                    className="flex-1 min-w-[140px] rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-slate-100"
                   />
                   {dueDate && (
                     <button

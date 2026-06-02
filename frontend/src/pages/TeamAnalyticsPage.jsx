@@ -166,7 +166,7 @@ export default function TeamAnalyticsPage() {
               <BarChart3 size={26} />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-slate-950">
+              <h1 className="text-3xl font-bold text-slate-950 dark:text-slate-100">
                 Executive Insights
               </h1>
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
@@ -190,7 +190,7 @@ export default function TeamAnalyticsPage() {
           </div>
         </div>
 
-        <div className="mb-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <div className="mb-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           <Kpi
             label="Organization Health"
             value={`${kpis.organization_health || 0}%`}
@@ -221,7 +221,7 @@ export default function TeamAnalyticsPage() {
           />
         </div>
 
-        <div className="mb-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <div className="mb-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {[
             ["Sprint Velocity", kpis.sprint_velocity || 0, LineChartIcon, "info"],
             ["Predictability", `${kpis.sprint_predictability || 0}%`, CheckCircle2, "success"],
@@ -236,15 +236,15 @@ export default function TeamAnalyticsPage() {
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <Brain size={19} className="text-blue-600" />
-              <h2 className="font-bold text-slate-950">AI Executive Summary</h2>
+              <h2 className="font-bold text-slate-950 dark:text-slate-100">AI Executive Summary</h2>
             </div>
-            <div className="flex rounded-md bg-slate-100 dark:bg-slate-800 p-1">
+            <div className="flex flex-wrap rounded-md bg-slate-100 dark:bg-slate-800 p-1">
               {["executive", "workload", "sprints", "automation"].map((view) => (
                 <button
                   key={view}
                   onClick={() => setActiveView(view)}
                   className={`rounded px-3 py-1.5 text-xs font-bold capitalize ${
-                    activeView === view ? "bg-white dark:bg-slate-800 text-slate-950 shadow-sm dark:shadow-slate-900/50" : "text-slate-500 dark:text-slate-400"
+                    activeView === view ? "bg-white dark:bg-slate-800 text-slate-950 dark:text-slate-100 shadow-sm dark:shadow-slate-900/50" : "text-slate-500 dark:text-slate-400"
                   }`}
                 >
                   {view}
@@ -260,7 +260,7 @@ export default function TeamAnalyticsPage() {
               <div key={`${insight.type}-${insight.title}`} className="rounded-md bg-slate-50 dark:bg-slate-900 p-4">
                 <div className="flex items-center gap-2">
                   <AlertTriangle size={16} className={insight.severity === "high" ? "text-rose-600" : "text-amber-600"} />
-                  <p className="font-bold text-slate-950">{insight.title}</p>
+                  <p className="font-bold text-slate-950 dark:text-slate-100">{insight.title}</p>
                 </div>
                 <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">{insight.message}</p>
               </div>
@@ -272,10 +272,10 @@ export default function TeamAnalyticsPage() {
           <div className="grid gap-6 2xl:grid-cols-[1.2fr_0.8fr]">
             <section className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm dark:shadow-slate-900/50">
               <div className="mb-5 flex items-center justify-between">
-                <h2 className="font-bold text-slate-950">Operational Trends</h2>
+                <h2 className="font-bold text-slate-950 dark:text-slate-100">Operational Trends</h2>
                 <Activity size={18} className="text-slate-500 dark:text-slate-400" />
               </div>
-              <div className="h-96">
+              <div className="h-72 sm:h-80 md:h-96">
                 {taskDistribution.length === 0 ? (
                   <div className="flex h-[100px] items-center justify-center">
                     <EmptyState icon={BarChart3} title="No completion data yet" description="Task distribution will appear as work is completed" />
@@ -298,10 +298,10 @@ export default function TeamAnalyticsPage() {
 
             <section className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm dark:shadow-slate-900/50">
               <div className="mb-5 flex items-center justify-between">
-                <h2 className="font-bold text-slate-950">Task Distribution</h2>
+                <h2 className="font-bold text-slate-950 dark:text-slate-100">Task Distribution</h2>
                 <Gauge size={18} className="text-slate-500 dark:text-slate-400" />
               </div>
-              <div className="h-96">
+              <div className="h-72 sm:h-80 md:h-96">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie data={taskDistribution} dataKey="count" nameKey="status" innerRadius={70} outerRadius={120} paddingAngle={3}>
@@ -320,14 +320,14 @@ export default function TeamAnalyticsPage() {
         {activeView === "workload" && (
           <section className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 px-5 py-4">
-              <h2 className="font-bold text-slate-950">Workload Intelligence</h2>
+              <h2 className="font-bold text-slate-950 dark:text-slate-100">Workload Intelligence</h2>
               <Users size={18} className="text-slate-500 dark:text-slate-400" />
             </div>
             <div className="divide-y divide-slate-100">
               {workloadUsers.map((row) => (
                 <div key={row.user?.id || row.user?.email || row.assigned_points} className="grid gap-4 px-5 py-4 lg:grid-cols-[220px_1fr_120px_120px] lg:items-center">
                   <div>
-                    <p className="font-bold text-slate-950">{row.user?.full_name || "Unassigned"}</p>
+                    <p className="font-bold text-slate-950 dark:text-slate-100">{row.user?.full_name || "Unassigned"}</p>
                     <p className="text-sm text-slate-500 dark:text-slate-400">{row.active_tasks} active tasks</p>
                   </div>
                   <div className="h-3 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
@@ -337,7 +337,7 @@ export default function TeamAnalyticsPage() {
                     />
                   </div>
                   <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{row.utilization}% utilized</span>
-                  <span className={`rounded-full px-3 py-1 text-center text-sm font-bold ${row.overloaded ? "bg-rose-50 text-rose-700" : "bg-emerald-50 text-emerald-700"}`}>
+                  <span className={`w-fit rounded-full px-3 py-1 text-center text-sm font-bold ${row.overloaded ? "bg-rose-50 text-rose-700" : "bg-emerald-50 text-emerald-700"}`}>
                     Risk {row.burnout_risk}%
                   </span>
                 </div>
@@ -349,8 +349,8 @@ export default function TeamAnalyticsPage() {
         {activeView === "sprints" && (
           <div className="grid gap-6 2xl:grid-cols-[0.9fr_1.1fr]">
             <section className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm dark:shadow-slate-900/50">
-              <h2 className="mb-5 font-bold text-slate-950">Sprint Predictability</h2>
-              <div className="h-80">
+              <h2 className="mb-5 font-bold text-slate-950 dark:text-slate-100">Sprint Predictability</h2>
+              <div className="h-72 sm:h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={sprintRows}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -366,13 +366,13 @@ export default function TeamAnalyticsPage() {
             </section>
             <section className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm dark:shadow-slate-900/50">
               <div className="border-b border-slate-200 dark:border-slate-700 px-5 py-4">
-                <h2 className="font-bold text-slate-950">Sprint Scorecards</h2>
+                <h2 className="font-bold text-slate-950 dark:text-slate-100">Sprint Scorecards</h2>
               </div>
               <div className="divide-y divide-slate-100">
                 {sprintRows.map((sprint) => (
                   <div key={sprint.id} className="grid gap-3 px-5 py-4 md:grid-cols-[1fr_repeat(4,90px)] md:items-center">
                     <div>
-                      <p className="font-bold text-slate-950">{sprint.name}</p>
+                      <p className="font-bold text-slate-950 dark:text-slate-100">{sprint.name}</p>
                       <p className="text-sm text-slate-500 dark:text-slate-400">{sprint.project?.name || "Global"}</p>
                     </div>
                     <p className="text-sm font-bold text-slate-600 dark:text-slate-300">{sprint.completed_points}/{sprint.committed_points}</p>
@@ -390,10 +390,10 @@ export default function TeamAnalyticsPage() {
           <div className="grid gap-6 2xl:grid-cols-[1fr_1fr]">
             <section className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm dark:shadow-slate-900/50">
               <div className="mb-5 flex items-center justify-between">
-                <h2 className="font-bold text-slate-950">Automation Effectiveness</h2>
+                <h2 className="font-bold text-slate-950 dark:text-slate-100">Automation Effectiveness</h2>
                 <Zap size={18} className="text-violet-600" />
               </div>
-              <div className="h-80">
+              <div className="h-72 sm:h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={automationTrend}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -406,12 +406,12 @@ export default function TeamAnalyticsPage() {
               </div>
             </section>
             <section className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm dark:shadow-slate-900/50">
-              <h2 className="font-bold text-slate-950">Automation KPIs</h2>
+              <h2 className="font-bold text-slate-950 dark:text-slate-100">Automation KPIs</h2>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {Object.entries(analytics?.automation?.summary || {}).map(([key, value]) => (
                   <div key={key} className="rounded-md bg-slate-50 dark:bg-slate-900 p-4">
                     <p className="text-xs font-bold uppercase text-slate-400 dark:text-slate-500">{key.replaceAll("_", " ")}</p>
-                    <p className="mt-2 text-2xl font-bold text-slate-950">{value}</p>
+                    <p className="mt-2 text-2xl font-bold text-slate-950 dark:text-slate-100">{value}</p>
                   </div>
                 ))}
               </div>
@@ -422,19 +422,19 @@ export default function TeamAnalyticsPage() {
         <div className="grid gap-6 2xl:grid-cols-[1fr_1fr]">
           <section className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm dark:shadow-slate-900/50">
             <div className="border-b border-slate-200 dark:border-slate-700 px-5 py-4">
-              <h2 className="font-bold text-slate-950">Member Productivity</h2>
+              <h2 className="font-bold text-slate-950 dark:text-slate-100">Member Productivity</h2>
             </div>
             <div className="divide-y divide-slate-100">
               {productivityMembers.slice(0, 8).map((member) => (
                 <div key={member.user_id} className="grid gap-4 px-5 py-4 md:grid-cols-[1fr_repeat(4,90px)] md:items-center">
                   <div>
-                    <p className="font-bold text-slate-950">{member.user}</p>
+                    <p className="font-bold text-slate-950 dark:text-slate-100">{member.user}</p>
                     <p className="text-sm text-slate-500 dark:text-slate-400">{member.role}</p>
                   </div>
                   <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">{member.assigned_tasks} tasks</p>
                   <p className="text-sm font-semibold text-emerald-600">{member.completed_tasks} done</p>
                   <p className="text-sm font-semibold text-rose-600">{member.overdue_tasks} late</p>
-                  <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-center text-sm font-bold text-slate-700 dark:text-slate-200">
+                  <span className="w-fit rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-center text-sm font-bold text-slate-700 dark:text-slate-200 md:w-auto">
                     {member.productivity}%
                   </span>
                 </div>
@@ -444,7 +444,7 @@ export default function TeamAnalyticsPage() {
 
           <section className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm dark:shadow-slate-900/50">
             <div className="border-b border-slate-200 dark:border-slate-700 px-5 py-4">
-              <h2 className="font-bold text-slate-950">Delivery Forecasts</h2>
+              <h2 className="font-bold text-slate-950 dark:text-slate-100">Delivery Forecasts</h2>
             </div>
             <div className="divide-y divide-slate-100">
               {forecasts.length === 0 ? (
@@ -454,15 +454,15 @@ export default function TeamAnalyticsPage() {
               ) : forecasts.slice(0, 8).map((forecast) => (
                 <div key={`${forecast.entity_type}-${forecast.entity_id}`} className="grid gap-4 px-5 py-4 md:grid-cols-[1fr_120px_120px] md:items-center">
                   <div>
-                    <p className="font-bold text-slate-950">{forecast.project?.name}</p>
+                    <p className="font-bold text-slate-950 dark:text-slate-100">{forecast.project?.name}</p>
                     <p className="text-sm text-slate-500 dark:text-slate-400">
                       {forecast.drivers?.overdue_tasks || 0} overdue, {forecast.drivers?.blocked_tasks || 0} blocked
                     </p>
                   </div>
-                  <span className={`rounded-full px-3 py-1 text-center text-sm font-bold ${riskTone(forecast.delivery_confidence)}`}>
+                  <span className={`w-fit rounded-full px-3 py-1 text-center text-sm font-bold md:w-auto ${riskTone(forecast.delivery_confidence)}`}>
                     {forecast.delivery_confidence}% confidence
                   </span>
-                  <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-center text-sm font-bold text-slate-700 dark:text-slate-200">
+                  <span className="w-fit rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-center text-sm font-bold text-slate-700 dark:text-slate-200 md:w-auto">
                     {forecast.delay_risk}% risk
                   </span>
                 </div>

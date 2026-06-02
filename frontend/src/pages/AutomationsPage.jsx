@@ -472,7 +472,7 @@ export default function AutomationsPage() {
                       </button>
                     </div>
                   </div>
-                  <div className="mt-2 flex items-center gap-5">
+                  <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-2">
                     {[
                       ["Actions", rule.actions?.length || 0],
                       ["Runs", rule.run_count || 0],

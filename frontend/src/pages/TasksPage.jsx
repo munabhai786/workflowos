@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { useSearchParams } from "react-router-dom";
 import { Filter, Loader2, Paperclip, Plus, Search, Signal, Sparkles, X } from "lucide-react";
 
@@ -74,6 +74,19 @@ function normalize(data) {
 export default function TasksPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const taskTitleRef = useRef(null);
+
+  const pointerSensor = useSensor(PointerSensor, {
+    activationConstraint: {
+      distance: 8,
+    },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 200,
+      tolerance: 5,
+    },
+  });
+  const sensors = useSensors(pointerSensor, touchSensor);
 
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -424,7 +437,7 @@ export default function TasksPage() {
         </div>
 
         <div className="workspace-card p-4">
-          <div className="grid gap-3 xl:grid-cols-[1.4fr_0.8fr_0.8fr]">
+          <div className="grid gap-3 grid-cols-1 md:grid-cols-3 xl:grid-cols-[1.4fr_0.8fr_0.8fr]">
             <label className="relative">
               <Search
                 size={18}
@@ -464,7 +477,7 @@ export default function TasksPage() {
               <option value="none">No Project (Personal)</option>
               {projects.map((project) => (
                 <option key={project.id} value={project.id}>
-                  {project.name}
+                  {project.name.length > 30 ? project.name.slice(0, 30) + "..." : project.name}
                 </option>
               ))}
             </select>
@@ -481,7 +494,7 @@ export default function TasksPage() {
               Create focused work item
             </div>
 
-            <div className="grid gap-3 2xl:grid-cols-[1fr_1.2fr_0.7fr_0.7fr_0.6fr_0.7fr_0.8fr]">
+            <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-[1fr_1.2fr_0.7fr_0.7fr_0.6fr_0.7fr_0.8fr]">
               <input
                 ref={taskTitleRef}
                 name="title"
@@ -507,7 +520,7 @@ export default function TasksPage() {
                 <option value="">No Project (Personal Task)</option>
                 {projects.map((project) => (
                   <option key={project.id} value={project.id}>
-                    {project.name}
+                    {project.name.length > 30 ? project.name.slice(0, 30) + "..." : project.name}
                   </option>
                 ))}
               </select>
@@ -521,7 +534,7 @@ export default function TasksPage() {
                 <option value="">Assignee</option>
                 {users.map((user) => (
                   <option key={user.id} value={user.id}>
-                    {user.full_name}
+                    {user.full_name.length > 30 ? user.full_name.slice(0, 30) + "..." : user.full_name}
                   </option>
                 ))}
               </select>
@@ -619,9 +632,9 @@ export default function TasksPage() {
           </form>
         )}
 
-        <DndContext onDragEnd={canCompleteTasks ? handleDragEnd : undefined}>
-          <div className="-mx-3 overflow-x-auto px-3 sm:mx-0 sm:px-0">
-            <div className="grid w-full min-w-[1080px] grid-cols-5 gap-3 pb-2 xl:min-w-0 xl:gap-4">
+        <DndContext sensors={sensors} onDragEnd={canCompleteTasks ? handleDragEnd : undefined}>
+          <div className="-mx-3 overflow-x-auto px-3 xl:mx-0 xl:overflow-x-visible xl:px-0">
+            <div className="flex flex-col w-full gap-3 pb-2 xl:grid xl:grid-cols-5 xl:min-w-0 xl:gap-4">
               {columns.map((column) => (
                 <KanbanColumn
                   key={column.id}
@@ -647,24 +660,24 @@ export default function TasksPage() {
           projects={projects}
           users={users}
         />
-
-        <DeleteConfirmationModal
-          isOpen={deleteConfirmation.isOpen}
-          title="Confirm task deletion"
-          description="This will permanently remove the task from your workspace."
-          itemName={deleteConfirmation.taskTitle}
-          isDeleting={deleteConfirmation.isDeleting}
-          onConfirm={handleDeleteConfirm}
-          onCancel={() =>
-            setDeleteConfirmation({
-              isOpen: false,
-              taskId: null,
-              taskTitle: null,
-              isDeleting: false,
-            })
-          }
-        />
       </div>
+
+      <DeleteConfirmationModal
+        isOpen={deleteConfirmation.isOpen}
+        title="Confirm task deletion"
+        description="This will permanently remove the task from your workspace."
+        itemName={deleteConfirmation.taskTitle}
+        isDeleting={deleteConfirmation.isDeleting}
+        onConfirm={handleDeleteConfirm}
+        onCancel={() =>
+          setDeleteConfirmation({
+            isOpen: false,
+            taskId: null,
+            taskTitle: null,
+            isDeleting: false,
+          })
+        }
+      />
     </MainLayout>
   );
 }

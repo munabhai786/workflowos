@@ -563,7 +563,7 @@ export default function PlanningPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-1 rounded-xl border border-border bg-surface-secondary p-1">
+            <div className="flex flex-wrap items-center gap-1 rounded-xl border border-border bg-surface-secondary p-1">
               {[
                 ["calendar", CalendarDays],
                 ["timeline", GanttChartSquare],

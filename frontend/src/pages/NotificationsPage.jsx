@@ -402,7 +402,7 @@ export default function NotificationsPage() {
                       )}
                     </div>
 
-                  <div className="ml-2 flex items-center gap-1 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+                  <div className="ml-2 flex items-center gap-1 opacity-100 md:opacity-0 transition-opacity duration-150 group-hover:opacity-100">
                     {!notification.is_read && (
                       <button
                         type="button"

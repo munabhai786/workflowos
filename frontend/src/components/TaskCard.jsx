@@ -90,6 +90,7 @@ export default function TaskCard({
           {...attributes}
           onClick={(event) => event.stopPropagation()}
           className="
+            touch-none
             cursor-grab
             rounded-lg
             p-1

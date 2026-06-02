@@ -27,7 +27,7 @@ export default function KanbanColumn({
   return (
     <div
       ref={setNodeRef}
-      className={`min-h-[520px] rounded-xl border border-border p-3 transition-colors xl:min-h-[620px] ${tone}`}
+      className={`min-h-[150px] rounded-xl border border-border p-3 transition-colors xl:min-h-[620px] ${tone}`}
     >
 
       <div className="mb-3 rounded-lg border border-border bg-white p-3 shadow-card">

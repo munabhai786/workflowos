@@ -403,7 +403,7 @@ function ProjectTimeline({ project }) {
         Timeline
       </div>
 
-      <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+      <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
         <div>
           <p className="text-xs text-slate-400 dark:text-slate-500">
             Start
@@ -476,7 +476,7 @@ function ProjectCard({
             )}
           </div>
 
-          <h3 className="mt-4 truncate text-lg font-bold text-slate-950">
+          <h3 className="mt-4 text-lg font-bold text-slate-950 break-words whitespace-normal">
             {project.name}
           </h3>
 
@@ -1519,7 +1519,7 @@ export default function ProjectsPage() {
         </div>
 
         <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 shadow-sm dark:shadow-slate-900/50">
-          <div className="grid gap-3 lg:grid-cols-[1.4fr_0.8fr_0.8fr_0.8fr]">
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_0.8fr_0.8fr]">
             <div className="relative">
               <Search
                 size={18}
@@ -1541,7 +1541,7 @@ export default function ProjectsPage() {
               onChange={(event) =>
                 setStatusFilter(event.target.value)
               }
-              className="rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-100"
+              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-100"
             >
               <option value="all">All statuses</option>
               <option value="active">Active</option>
@@ -1556,7 +1556,7 @@ export default function ProjectsPage() {
               onChange={(event) =>
                 setPriorityFilter(event.target.value)
               }
-              className="rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-100"
+              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-100"
             >
               <option value="all">All priorities</option>
               <option value="high">High</option>

@@ -158,7 +158,7 @@ export default function InviteUserModal({
 
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 px-4">
 
-      <div className="bg-white w-full max-w-lg rounded-3xl p-8 shadow-2xl animate-fadeIn">
+      <div className="bg-white w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl animate-fadeIn">
 
         {/* HEADER */}
 
@@ -331,7 +331,7 @@ export default function InviteUserModal({
 
         {/* FOOTER */}
 
-        <div className="flex justify-end gap-4">
+        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:gap-4">
 
           <button
             onClick={onClose}

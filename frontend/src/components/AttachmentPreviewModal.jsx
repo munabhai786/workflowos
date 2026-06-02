@@ -120,7 +120,7 @@ export default function AttachmentPreviewModal({
             <iframe
               title={title}
               src={objectUrl}
-              className="h-[78vh] w-full rounded-xl border border-slate-200 bg-slate-50"
+              className="h-[50vh] sm:h-[78vh] w-full rounded-xl border border-slate-200 bg-slate-50"
             />
           )}
 
